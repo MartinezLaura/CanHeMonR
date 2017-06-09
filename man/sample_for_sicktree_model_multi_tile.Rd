@@ -48,5 +48,7 @@ read in the calval data
 class_test_path <- '//ies.jrc.it/h03/FISE/forest/CanopyHealthMonitoring/PWN/classification_tests'
 training_pol_filename <- file.path(class_test_path,'cal_val_data/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170126.shp')
 Pols <- raster::shapefile(training_pol_filename)
+tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <- '/Volumes/Laura/ADS100_06032017/', tile = 'ALL', vuln_classes <- list(c('Pb')), Pols <- '/Volumes/Laura/visual_interpretation/', field_name<- 'ADS100_Aug2015_inspect_20170313.shp',
+ninputs_tile <- 13, data_outp_dir = /Users/Laura 1/Documents/JRC/Results/CanHeMonR, abs_samp = 1000,parallel = F, nWorkers = 4)
 }
 }

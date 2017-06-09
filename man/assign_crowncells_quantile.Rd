@@ -28,6 +28,7 @@ A raster file, with the same spatial attributes as r and quantile values between
 Overlay a polygon shapefile on a raster, so that each cell gets assigned its quantile value calculated from
 all the raster values falling in that that particular polygon. Optionally, write away a polygon shapefile of the crowns where
 only there portions with specified quantile values are kept.
+cacaacacacacacacac
 }
 \details{
 Writes away  both 1) a raster file, with the same spatial attributes as r and quantile values between 0 and 100 for cells in polygons, and NA outside polygons, a

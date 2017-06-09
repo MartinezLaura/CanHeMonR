@@ -32,11 +32,11 @@
 #'
 
 #' #' Laura
-#' tt <- grow_crowns(r_file <- "/Volumes/Laura/Pieter/pt606000-4401000.tif",
-#'                   seed_shpfile <- "/Volumes/Laura/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170203.shp",
-#'                   seed_extent = rep(NA,4), avoid_recalculation = T, prob_cut = 99, prob_step_down = 2, seed_nrs = NA,
-#'                   outp_crown_shp_filename = "/Volumes/Laura/Pieter/results/pt606000-4401000", process_dir = NULL, max_crown_RADIUS_in_m = 4, min_crown_RADIUS_in_m = 0.6,
-#'                   plott = F, RGBseq = c(1,2,3), parallel = F, nWorkers = 4)
+# tt <- grow_crowns(r_file <- "/Volumes/Laura/Pieter/pt610000-4408000.tif",
+#                   seed_shpfile <- "/Volumes/Laura/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170203.shp",
+#                   seed_extent = rep(NA,4), avoid_recalculation = T, prob_cut = 99, prob_step_down = 2, seed_nrs = NA,
+#                   outp_crown_shp_filename = "/Volumes/Laura/Pieter/results/pt610000-4408000-4", process_dir = NULL, max_crown_RADIUS_in_m = 4, min_crown_RADIUS_in_m = 0.6,
+#                   plott = F, RGBseq = c(1,2,3), parallel = F, nWorkers = 4)
 
 
 #' @export
@@ -116,6 +116,9 @@ grow_crowns <- function(r_file,
   seeds_to_run <- seed_nrs
   if (is.na(seeds_to_run[1])){
     cat(paste0('In principle estimating crowns for all of the ', length(seeds), ' seeds in the .shp\n'))
+    #pick only the seed that fall in the raster
+    seeds <- raster::crop(seeds,r)
+    cat('Estimating ',length(seeds),' seeds for the specified tile\n')
   }else{
     #only keep requested seed nrs, for which seeds exist
     seeds_to_run <- intersect(seeds_to_run, 1:length(seeds))

@@ -8,9 +8,8 @@
 #' @return Saves class-specific distribution models, using a data frame created from training points and covariate images
 #' @examples \dontrun{
 #' #calibrate the model with 10 absences per tile for Pbclass
-#' tt <- calibrate_sicktree_model_multi_tile (vuln_classes = list(c('Pb')), training_df = readRDS(file.path(model_dir, 'maxent_samplemaxent_training_dfs_100_samples.rdsdata')),
-#'                                                   model_outp_dir = paste0(model_dir,'samp100_')))),
-#                                model_outp_dir = paste0(model_dir <- '//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp/','samp100_'))
+# tt <- calibrate_sicktree_model_multi_tile (vuln_classes = list(c('Pb')), training_df = readRDS(file.path(model_dir, 'maxent_training_dfs.rdsdata')),
+#                                                   model_outp_dir = paste0(model_dir,'samp100_'))
 #' }
 
 

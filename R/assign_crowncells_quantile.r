@@ -2,6 +2,7 @@
 #' @description Overlay a polygon shapefile on a raster, so that each cell gets assigned its quantile value calculated from
 #' all the raster values falling in that that particular polygon. Optionally, write away a polygon shapefile of the crowns where
 #' only there portions with specified quantile values are kept.
+#' cacaacacacacacacac
 #' @param r The single-layer raster object to draw values from, and that will serve as the spatial template for the output
 #' @param crowns A polygon shapefile or a SpatialPolygons(dataframe) that overlays r
 #' @param outpname_r A filename for the raster output

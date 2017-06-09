@@ -8,7 +8,6 @@
 #' @note Run in 32-bit R installation.
 #' @return Saves class-specific distribution models as raster images, using image layers as inputs
 #' @examples \dontrun{
-
 #'run_sicktree_model_multitile(fname_predictors_txt = file.path(model_dir <- "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp/",'predictors_pt606000_4401000.txt'),
 #'                             fname_MaxEntmodel_r = file.path(model_dir <- "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp/", 'Pb.rdsdata'),
 #'                             fname_output_tif =  file.path(model_dir <- "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp/",'MaxEnt_Pb_pt606000_4401000.tif'))
@@ -18,6 +17,8 @@
 #'run_sicktree_model_multitile(fname_predictors_txt = file.path(model_dir <- "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp/",'predictors_pt617000_4404000.txt'),
 #'                             fname_MaxEntmodel_r = file.path(model_dir <- "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp/", 'samp10_Pb.rdsdata'),
 #'                             fname_output_tif =  file.path(model_dir <- "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp/",'MaxEnt_Pb_pt617000_4404000_100.tif'))
+#'                             #'tt <- run_sicktree_model(predictors_dir = '/Volumes/Laura/ADS100_06032017/pt598000-4413000.tif', txt_dir <- '/Users/Laura 1/Documents/JRC/CanHeMonR/',
+#'fname_predictors_txt <-'Predictors.txt', fname_MaxEntmodel_r <- '/Volumes/Laura/Pieter/results', outp_dir <- '/Volumes/Laura/Pieter/results')
 #'}
 #'
 #' @export

@@ -21,9 +21,12 @@
 #' class_test_path <- '//ies.jrc.it/h03/FISE/forest/CanopyHealthMonitoring/PWN/classification_tests'
 #' training_pol_filename <- file.path(class_test_path,'cal_val_data/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170126.shp')
 #' Pols <- raster::shapefile(training_pol_filename)
+# tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <- '/Users/Laura 1/Documents/Shared', tile = 'ALL', vuln_classes <- list(c('Pb')),
+#                                             training_pol_filename <- '/Users/Laura 1/Documents/Shared/visual_interpretation_ADS/ADS100_Aug2015_inspect_20170313.shp', field_name <- 'type',
+#                                             ninputs_tile <- 27, data_outp_dir <- '/Users/Laura 1/Documents/Shared/', abs_samp = 1000,parallel = F, nWorkers = 4)
 #'}
 #' @export
-sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln_classes, Pols, field_name,ninputs_tile, data_outp_dir = NULL, abs_samp = 1000,
+sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln_classes, training_pol_filename, field_name, ninputs_tile, data_outp_dir, abs_samp = 1000,
                                                parallel = F, nWorkers = 4){
   #if (R.Version()$arch != "i386"){
   #  cat("This code needs to be run in 32-bit version of R\n Exiting \n")
@@ -36,7 +39,9 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
   require(maptools)
   #read in the image
   require(raster)
-
+  #Open the shapefile
+  # temp <- file.path(paste0(Pols,field_name))
+  Pols <- raster::shapefile(training_pol_filename)
   #Tells if the dataframe is a factor, if yes erase the levels that are NULL. IN THIS CASE DATA IS NOT A FACTOR
   if(is.factor( Pols@data[[field_name]])){
     Pols@data[[field_name]] <- droplevels(Pols@data[[field_name]])
@@ -92,7 +97,6 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
   stime <- system.time({maxent_training_dfs <- foreach::foreach(i = 1:length(tile), .combine = rbind.data.frame, .inorder=F, .multicombine=F, .errorhandling='remove') %op% {
     tile_i <- tile[i]
     for (tile_i in tile){
-      #tile_i = tile[1]
       #make alternative tile code (Margherita uses these in the texture filenames)
       tile_i_multiversion <- unique(c(tile_i, gsub('_','-',tile_i),gsub('-','_',tile_i),gsub('-','\\.',tile_i),gsub('_','\\.',tile_i),gsub('\\.','-',tile_i),gsub('\\.','_',tile_i)))
       tile_i_multiversion_for_regexpr <- paste(tile_i_multiversion, collapse = "|")
@@ -106,7 +110,7 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
       if (length(pred_rs) == ninputs_tile){
         #check if you have any points in this tile
         #crop the calval to this tile
-        Pols_tile <- raster::crop(Pols, raster::raster(pred_rs[1]))
+        Pols_tile <- raster::crop(Pols, raster::raster(pred_rs[i]))
 
         #only proceed if you have training points in this tile
         if (length(Pols_tile) > 1){
@@ -244,8 +248,8 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
 
     #data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdata')
     data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdsdata')
-    saveRDS(tile_dat_class, file = data_file)
-    #saveRDS(maxent_training_dfs, file = data_file)
+    #saveRDS(tile_dat_class, file = data_file)
+    saveRDS(maxent_training_dfs, file = data_file)
     cat('Wrote away ', data_file,'\n')
   }
 
