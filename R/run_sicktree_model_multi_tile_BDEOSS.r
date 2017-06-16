@@ -16,6 +16,7 @@
 #'  fname_MaxEntmodel_r = "samp10_Pb.rdsdata",
 #'  output_dir = "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp",
 #')
+
 #' }
 #' @export
 run_sicktree_model_multitile <- function(
@@ -42,12 +43,19 @@ run_sicktree_model_multitile <- function(
   #see http://stackoverflow.com/questions/7019912/using-the-rjava-package-on-win7-64-bit-with-r
   #http://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf
   #+++++++++++++++++++++++++++++++++++++++++++++++
-  if (R.Version()$arch != "i386"){
-    cat("This code needs to be run in 32-bit version of R\n Exiting \n")
-  }
+  # if (R.Version()$arch != "i386"){
+  #   cat("This code needs to be run in 32-bit version of R\n Exiting \n")
+  # }
+
+  # if (R.Version()$arch != "i386"){
+  #   #If  64bit version, deactivate JAVA_HOME it within your R-session with the following code before loading rJava
+  #   if (Sys.getenv("JAVA_HOME")!="")
+  #     Sys.setenv(JAVA_HOME="")
+  #   library(rJava)
+  # }
 
   #load the model
-  mod2 <- readRDS(fname_MaxEntmodel_r)
+  mod2 <- readRDS(paste0(MaxEntmodel_dir, fname_MaxEntmodel_r))
 
   #load the predictor layers
   raster_fnames <- unlist(read.table(file.path(txt_dir, fname_predictors_txt), stringsAsFactors=F)[,1])
@@ -56,6 +64,8 @@ run_sicktree_model_multitile <- function(
 
   #adjust the layernames to make them conform the model syntax
   names(r_pred) <- paste0('l',substr(names(r_pred),17,nchar(names(r_pred))))
+  print(names(r_pred))
+  print(mod2)
 
   # run the model and write the output away to a file
   px <- dismo::predict(r_pred, mod2,  progress = '')

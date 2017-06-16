@@ -7,7 +7,7 @@
 #' and the vector elements are synonyms used to describe that class.
 #' The fist place in each vector will be used in the output name used to store the calibrated model, so it should not contain spaces.
 #' The other places should appear as attributes in the field 'field_name' of Pols.
-#' @param Pols SpatialPointsDataFrame or SpatialPolygonsDataFrame of which one field contains the vuln.classes
+#' @param training_pol_filename path SpatialPointsDataFrame or SpatialPolygonsDataFrame of which one field contains the vuln.classes
 #' @param field_name The field in AOI.filename that contains the vuln_classes
 #' @param abs_samp How many 'absence' pixels should be randomly selected from eah tile to train the model? Default is 100.
 #' @param parallel Should the code be run in parallel using the doParallel package? Default is FALSE.
@@ -21,9 +21,11 @@
 #' class_test_path <- '//ies.jrc.it/h03/FISE/forest/CanopyHealthMonitoring/PWN/classification_tests'
 #' training_pol_filename <- file.path(class_test_path,'cal_val_data/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170126.shp')
 #' Pols <- raster::shapefile(training_pol_filename)
-# tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <- '/Users/Laura 1/Documents/Shared', tile = 'ALL', vuln_classes <- list(c('Pb')),
-#                                             training_pol_filename <- '/Users/Laura 1/Documents/Shared/visual_interpretation_ADS/ADS100_Aug2015_inspect_20170313.shp', field_name <- 'type',
-#                                             ninputs_tile <- 27, data_outp_dir <- '/Users/Laura 1/Documents/Shared/', abs_samp = 1000,parallel = F, nWorkers = 4)
+# tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <-'/media/laura/Laura/ADS100_06032017/TexturesR/', tile = 'ALL', vuln_classes <- list(c('Pb')),
+#                                             training_pol_filename <- '/media/laura/Laura/visual_interpretation/visual_interpretation_ADS/ADS100_Aug2015_inspect_20170313_reproj.shp',
+#                                             field_name = 'type', ninputs_tile = 27, data_outp_dir <- '/media/laura/Laura/Rcode/Sicktree/', abs_samp = 1000,
+#                                             parallel = F, nWorkers = 4)
+
 #'}
 #' @export
 sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln_classes, training_pol_filename, field_name, ninputs_tile, data_outp_dir, abs_samp = 1000,
@@ -60,7 +62,6 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
 
   #if you want to run all the tiles in a directory, harvest the available tilenames
   if (tile[1] == 'ALL'){
-    #Take de hole name of the file 16 characters
     tile <- substr(basename(all_tifs),1,16)
     tile <- unique(tile)
     #only keep tiles that start  with 'pt'
@@ -196,26 +197,29 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
 
             #add the data for this class and tile, to the data for this tile
             tile_dat <- rbind.data.frame(tile_dat, tile_dat_class)
-            #require(dismo)
+            require(dismo)
           }
 
 
           # #join the data from this tile if to the one from the other tiles - no lo hace
-          if (tile_counter == 0){
-            maxent_training_dfs[[class.]] <- tile_dat
-            }else{
-              maxent_training_dfs[[class.]] <- rbind.data.frame(maxent_training_dfs[[class.]], tile_dat)
-              }
-          tile_counter <- tile_counter + 1
-          cat(tile_counter, ' tiles done, ', length(tile)-tile_counter, ' to go\n')
+          # cat(tile_counter, ' tiles counter\n')
+          # if (tile_counter == 0){
+          #   cat('Entrooooooooo\n')
+          #   maxent_training_dfs[[class.]] <- tile_dat
+          #   print(maxent_training_dfs)
+          #   }else{
+          #     maxent_training_dfs[[class.]] <- rbind.data.frame(maxent_training_dfs[[class.]], tile_dat)
+          #     }
+          # tile_counter <- tile_counter + 1
+          # cat(tile_counter, ' tiles done, ', length(tile)-tile_counter, ' to go\n')
         }
 
       }else{
         cat('The number of inputs given is not the correct one, it should be:',ninputs_tile, 'not:',length((pred_rs)),'\n')
       }
 
-      # #return the tile_dat at the end of each iteration
-      # tile_dat
+      #return the tile_dat at the end of each iteration
+      tile_dat
     }
   }
   cat("------------------------------------------\n")
@@ -245,11 +249,12 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
 
 })
   if (!is.null(data_outp_dir)){
-
+    cat('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n')
+    print(maxent_training_dfs)
     #data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdata')
     data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdsdata')
-    #saveRDS(tile_dat_class, file = data_file)
-    saveRDS(maxent_training_dfs, file = data_file)
+    saveRDS(tile_dat_class, file = data_file)
+    # saveRDS(maxent_training_dfs, file = data_file)
     cat('Wrote away ', data_file,'\n')
   }
 

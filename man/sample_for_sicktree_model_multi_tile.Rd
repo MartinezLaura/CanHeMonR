@@ -5,8 +5,8 @@
 \title{Sample training data for image classification from multiple image tiles}
 \usage{
 sample_for_sicktree_model_multi_tile(r_train_dir, tile = "ALL", vuln_classes,
-  Pols, field_name, ninputs_tile, data_outp_dir = NULL, abs_samp = 1000,
-  parallel = F, nWorkers = 4)
+  training_pol_filename, field_name, ninputs_tile, data_outp_dir,
+  abs_samp = 1000, parallel = F, nWorkers = 4)
 }
 \arguments{
 \item{r_train_dir}{A directory where .tifs for training can be found for multiple tiles}
@@ -19,7 +19,7 @@ and the vector elements are synonyms used to describe that class.
 The fist place in each vector will be used in the output name used to store the calibrated model, so it should not contain spaces.
 The other places should appear as attributes in the field 'field_name' of Pols.}
 
-\item{Pols}{SpatialPointsDataFrame or SpatialPolygonsDataFrame of which one field contains the vuln.classes}
+\item{training_pol_filename}{path SpatialPointsDataFrame or SpatialPolygonsDataFrame of which one field contains the vuln.classes}
 
 \item{field_name}{The field in AOI.filename that contains the vuln_classes}
 
@@ -48,7 +48,5 @@ read in the calval data
 class_test_path <- '//ies.jrc.it/h03/FISE/forest/CanopyHealthMonitoring/PWN/classification_tests'
 training_pol_filename <- file.path(class_test_path,'cal_val_data/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170126.shp')
 Pols <- raster::shapefile(training_pol_filename)
-tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <- '/Volumes/Laura/ADS100_06032017/', tile = 'ALL', vuln_classes <- list(c('Pb')), Pols <- '/Volumes/Laura/visual_interpretation/', field_name<- 'ADS100_Aug2015_inspect_20170313.shp',
-ninputs_tile <- 13, data_outp_dir = /Users/Laura 1/Documents/JRC/Results/CanHeMonR, abs_samp = 1000,parallel = F, nWorkers = 4)
 }
 }

@@ -28,7 +28,10 @@ Run in 32-bit R installation. Do you need a 'require(rJava)?'. Implement optiona
 }
 \examples{
 \dontrun{
+Laura
+tt <- calibrate_sicktree_model(vuln_classes = list(c('Pb')), training_df = readRDS(file.path('/Volumes/Laura/Pieter/maxent_training_dfs.rdsdata')),
+                               model_outp_dir = paste0(model_dir <- '/Volumes/Laura/Pieter/model/','samp100_'))
+
 }
 
-#' Laura
 }
