@@ -21,7 +21,7 @@
 #' class_test_path <- '//ies.jrc.it/h03/FISE/forest/CanopyHealthMonitoring/PWN/classification_tests'
 #' training_pol_filename <- file.path(class_test_path,'cal_val_data/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170126.shp')
 #' Pols <- raster::shapefile(training_pol_filename)
-# tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <-'/media/laura/Laura/ADS100_06032017/TexturesR/', tile = 'ALL', vuln_classes <- list(c('Pb')),
+# tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <-'/media/laura/Laura/ADS100_06032017/Calibrate/', tile = 'ALL', vuln_classes <- list(c('Pb')),
 #                                             training_pol_filename <- '/media/laura/Laura/visual_interpretation/visual_interpretation_ADS/ADS100_Aug2015_inspect_20170313_reproj.shp',
 #                                             field_name = 'type', ninputs_tile = 27, data_outp_dir <- '/media/laura/Laura/Rcode/Sicktree/', abs_samp = 1000,
 #                                             parallel = F, nWorkers = 4)
@@ -213,9 +213,13 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
           # tile_counter <- tile_counter + 1
           # cat(tile_counter, ' tiles done, ', length(tile)-tile_counter, ' to go\n')
         }
+        else{
+          print("entrooooooooooooooo")
+          warning('There are no points falling in this tile')
+        }
 
       }else{
-        cat('The number of inputs given is not the correct one, it should be:',ninputs_tile, 'not:',length((pred_rs)),'\n')
+        warning('The number of inputs given is not the correct one, it should be:',ninputs_tile, 'not:',length((pred_rs)),'\n')
       }
 
       #return the tile_dat at the end of each iteration
@@ -249,8 +253,6 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
 
 })
   if (!is.null(data_outp_dir)){
-    cat('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n')
-    print(maxent_training_dfs)
     #data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdata')
     data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdsdata')
     saveRDS(tile_dat_class, file = data_file)
