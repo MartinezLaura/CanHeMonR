@@ -14,6 +14,7 @@
 #' @param nWorkers If running the ocde in parallel, how many workers should be used? Default is 4.
 #' @param ninputs_tile Number of inputs that we have fore each tile, for exemple number of textures
 #' @param data_outp_dir The folder and filename prefix to save the sampled data to. No data is saved is data_outp_dir is NULL. Default is NULL.
+#' @param data_outp_name Name of the data to output
 #' @note Run in 32-bit R installation. Do you need a 'require(rJava)?'. Implement optional parallel
 #' @return Saves a list with class-specific data frames of which the first column is the presence-absence response that can be used to train distribution model.
 #' @examples \dontrun{
@@ -24,12 +25,12 @@
 # tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <-'/media/laura/Laura/ADS100_06032017/Calibrate/', tile = 'ALL', vuln_classes <- list(c('Pb')),
 #                                             training_pol_filename <- '/media/laura/Laura/visual_interpretation/visual_interpretation_ADS/ADS100_Aug2015_inspect_20170313_reproj.shp',
 #                                             field_name = 'type', ninputs_tile = 27, data_outp_dir <- '/media/laura/Laura/Rcode/Sicktree/', abs_samp = 1000,
-#                                             parallel = F, nWorkers = 4)
+#                                             parallel = F, nWorkers = 4, data_outp_name = "maxentprobaLaura")
 
 #'}
 #' @export
 sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln_classes, training_pol_filename, field_name, ninputs_tile, data_outp_dir, abs_samp = 1000,
-                                               parallel = F, nWorkers = 4){
+                                               parallel = F, nWorkers = 4, data_outp_name){
   #if (R.Version()$arch != "i386"){
   #  cat("This code needs to be run in 32-bit version of R\n Exiting \n")
   #}
@@ -214,7 +215,6 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
           # cat(tile_counter, ' tiles done, ', length(tile)-tile_counter, ' to go\n')
         }
         else{
-          print("entrooooooooooooooo")
           warning('There are no points falling in this tile')
         }
 
@@ -254,7 +254,8 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
 })
   if (!is.null(data_outp_dir)){
     #data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdata')
-    data_file <- paste0(data_outp_dir, 'maxent_training_dfs.rdsdata')
+    data_file <- paste0(data_outp_name, '.rdsdata')
+    data_file <- paste0(data_outp_dir, data_file)
     saveRDS(tile_dat_class, file = data_file)
     # saveRDS(maxent_training_dfs, file = data_file)
     cat('Wrote away ', data_file,'\n')
