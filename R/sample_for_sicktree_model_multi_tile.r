@@ -129,9 +129,9 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
           cat('layernames were adjust to:\n')
           cat(names(r_train),'\n')
 
-
           #reproject the trainig pols if necessary
           if (raster::projection(Pols) != raster::projection(r_train)){
+            print("Changing projection of the shapefile")
             Pols <- sp::spTransform(Pols, sp::CRS(raster::projection(r_train)))
           }
 
