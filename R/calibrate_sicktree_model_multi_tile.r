@@ -9,10 +9,8 @@
 #' @examples \dontrun{
 #' #calibrate the model with 10 absences per tile for Pbclass
 # tt <- calibrate_sicktree_model_multi_tile (vuln_classes = list(c('Pb')), training_df = readRDS('/media/laura/Laura/Rcode/Sicktree/2-tiles/maxentprobaLaura.rdsdata'),
-#                                                   model_outp_dir = paste0('/media/laura/Laura/Rcode/Sicktree/','samp100_'))
+#                                                   model_outp_dir = paste0('/media/laura/Laura/Rcode/Sicktree/2-tiles/','samp_'))
 #' }
-
-
 #'
 #'
 #' @export

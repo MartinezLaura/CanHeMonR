@@ -16,12 +16,12 @@
 #'  fname_MaxEntmodel_r = "samp10_Pb.rdsdata",
 #'  output_dir = "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp",
 #')
-# tt <- run_sicktree_model_multitile(predictors_dir <- "/media/laura/Laura/ADS100_06032017/Calibrate",
-#                                    txt_dir <- "/media/laura/Laura/Rcode/Sicktree/Predictors/",
+# tt <- run_sicktree_model_multitile(predictors_dir <- "/media/laura/Laura/ADS100_06032017/ADS_toPredict/",
+#                                    txt_dir <- "/media/laura/Laura/Rcode/Sicktree/2-tiles/",
 #                                    fname_predictors_txt = "predictors_pt598000_4413000.txt",
-#                                    MaxEntmodel_dir <- "/media/laura/Laura/Rcode/Sicktree/",
-#                                    fname_MaxEntmodel_r = "samp100_Pb.rdsdata",
-#                                    output_dir <- "/media/laura/Laura/Rcode/Sicktree/IMG/"
+#                                    MaxEntmodel_dir <- "/media/laura/Laura/Rcode/Sicktree/2-tiles/",
+#                                    fname_MaxEntmodel_r = "samp_Pb.rdsdata",
+#                                    output_dir <- "/media/laura/Laura/Rcode/Sicktree/2-tiles/Results/"
 # )
 #' }
 #' @export
@@ -53,12 +53,12 @@ run_sicktree_model_multitile <- function(
   #   cat("This code needs to be run in 32-bit version of R\n Exiting \n")
   # }
 
-  # if (R.Version()$arch != "i386"){
-  #   #If  64bit version, deactivate JAVA_HOME it within your R-session with the following code before loading rJava
-  #   if (Sys.getenv("JAVA_HOME")!="")
-  #     Sys.setenv(JAVA_HOME="")
-  #   library(rJava)
-  # }
+  if (R.Version()$arch != "i386"){
+    #If  64bit version, deactivate JAVA_HOME it within your R-session with the following code before loading rJava
+    if (Sys.getenv("JAVA_HOME")!="")
+      Sys.setenv(JAVA_HOME="")
+    library(rJava)
+  }
 
   #load the model
   mod2 <- readRDS(paste0(MaxEntmodel_dir, fname_MaxEntmodel_r))
