@@ -6,7 +6,7 @@
 \usage{
 sample_for_sicktree_model_multi_tile(r_train_dir, tile = "ALL", vuln_classes,
   training_pol_filename, field_name, ninputs_tile, data_outp_dir,
-  abs_samp = 1000, parallel = F, nWorkers = 4)
+  abs_samp = 1000, parallel = F, nWorkers = 4, data_outp_name)
 }
 \arguments{
 \item{r_train_dir}{A directory where .tifs for training can be found for multiple tiles}
@@ -32,6 +32,8 @@ The other places should appear as attributes in the field 'field_name' of Pols.}
 \item{parallel}{Should the code be run in parallel using the doParallel package? Default is FALSE.}
 
 \item{nWorkers}{If running the ocde in parallel, how many workers should be used? Default is 4.}
+
+\item{data_outp_name}{Name of the data to output}
 }
 \value{
 Saves a list with class-specific data frames of which the first column is the presence-absence response that can be used to train distribution model.
