@@ -11,8 +11,12 @@
 #                                tile <- 'ALL', data_outp_dir = "/media/laura/Laura/Rcode/Sicktree/",
 #                                parallel <- F, nWorkers = 4)
 #'}
-
-make_predictor_txt_files <- function(r_train_dir, tile, data_outp_dir, parallel, nWorkers){
+#' @export
+make_predictor_txt_files <- function(r_train_dir,
+                                     tile,
+                                     data_outp_dir,
+                                     parallel,
+                                     nWorkers){
 
   r_train_dir
   #harvest all the tif files in the directories holding covariate/predictor images

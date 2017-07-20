@@ -22,11 +22,10 @@
 #' class_test_path <- '//ies.jrc.it/h03/FISE/forest/CanopyHealthMonitoring/PWN/classification_tests'
 #' training_pol_filename <- file.path(class_test_path,'cal_val_data/Castelo_Branco_DMC_Nov2016/DMC_Nov2016_inspect_multi_final_20170126.shp')
 #' Pols <- raster::shapefile(training_pol_filename)
-# tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <-'/media/laura/Laura/ADS100_06032017/Calibrate/', tile = 'ALL', vuln_classes <- list(c('Pb')),
+# tt <-  sample_for_sicktree_model_multi_tile(r_train_dir <-'/media/laura/Laura/ADS100_06032017/ADS_sample/', tile = 'ALL', vuln_classes <- list(c('Pb')),
 #                                             training_pol_filename <- '/media/laura/Laura/visual_interpretation/visual_interpretation_ADS/ADS100_Aug2015_inspect_20170313_reproj.shp',
-#                                             field_name = 'type', ninputs_tile = 27, data_outp_dir <- '/media/laura/Laura/Rcode/Sicktree/', abs_samp = 1000,
+#                                             field_name = 'type', ninputs_tile = 27, data_outp_dir <- '/media/laura/Laura/Rcode/Sicktree/2-tiles/', abs_samp = 1000,
 #                                             parallel = F, nWorkers = 4, data_outp_name = "maxentprobaLaura")
-
 #'}
 #' @export
 sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln_classes, training_pol_filename, field_name, ninputs_tile, data_outp_dir, abs_samp = 1000,
@@ -98,6 +97,7 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
   length(tile)
   stime <- system.time({maxent_training_dfs <- foreach::foreach(i = 1:length(tile), .combine = rbind.data.frame, .inorder=F, .multicombine=F, .errorhandling='remove') %op% {
     tile_i <- tile[i]
+    print (tile)
     for (tile_i in tile){
       #make alternative tile code (Margherita uses these in the texture filenames)
       tile_i_multiversion <- unique(c(tile_i, gsub('_','-',tile_i),gsub('-','_',tile_i),gsub('-','\\.',tile_i),gsub('_','\\.',tile_i),gsub('\\.','-',tile_i),gsub('\\.','_',tile_i)))
@@ -218,10 +218,7 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
           warning('There are no points falling in this tile')
         }
 
-      }else{
-        warning('The number of inputs given is not the correct one, it should be:',ninputs_tile, 'not:',length((pred_rs)),'\n')
       }
-
       #return the tile_dat at the end of each iteration
       tile_dat
     }
