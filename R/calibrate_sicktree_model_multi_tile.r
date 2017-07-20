@@ -32,7 +32,8 @@ calibrate_sicktree_model_multi_tile <- function(vuln_classes = 'ALL', training_d
   #read in the image
   require(raster)
   require(dismo)
-  #require(rJava)
+  require(rJava)
+
   #for each class that should be modelled
   if (vuln_classes == 'ALL'){
     vuln_classes <- unique(training_df$class)

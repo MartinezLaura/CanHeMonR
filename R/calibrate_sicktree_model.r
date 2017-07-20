@@ -31,9 +31,9 @@ calibrate_sicktree_model <- function(vuln_classes = 'ALL', training_df, model_ou
   #see http://stackoverflow.com/questions/7019912/using-the-rjava-package-on-win7-64-bit-with-r
   #http://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf
 
-  #require(maptools)
+  require(maptools)
   #read in the image
-  #require(raster)
+  require(raster)
 
   if(is.factor( Pols@data[[field_name]])){
     Pols@data[[field_name]] <- droplevels(Pols@data[[field_name]])

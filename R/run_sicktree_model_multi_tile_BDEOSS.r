@@ -16,7 +16,13 @@
 #'  fname_MaxEntmodel_r = "samp10_Pb.rdsdata",
 #'  output_dir = "//ies.jrc.it/h03/CANHEMON/H03_CANHEMON/Imagery/Portugal/DMC/ortophotos_22122016/classification_temp",
 #')
-
+# tt <- run_sicktree_model_multitile(predictors_dir <- "/media/laura/Laura/ADS100_06032017/Calibrate",
+#                                    txt_dir <- "/media/laura/Laura/Rcode/Sicktree/Predictors/",
+#                                    fname_predictors_txt = "predictors_pt598000_4413000.txt",
+#                                    MaxEntmodel_dir <- "/media/laura/Laura/Rcode/Sicktree/",
+#                                    fname_MaxEntmodel_r = "samp100_Pb.rdsdata",
+#                                    output_dir <- "/media/laura/Laura/Rcode/Sicktree/IMG/"
+# )
 #' }
 #' @export
 run_sicktree_model_multitile <- function(
