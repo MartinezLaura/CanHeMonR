@@ -215,7 +215,7 @@ sample_for_sicktree_model_multi_tile <- function(r_train_dir, tile = 'ALL', vuln
           # cat(tile_counter, ' tiles done, ', length(tile)-tile_counter, ' to go\n')
         }
         else{
-          warning('There are no points falling in this tile')
+          print('There are no points falling in this tile:', tile[i],'\n')
         }
 
       }
