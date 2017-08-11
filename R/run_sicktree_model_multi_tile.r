@@ -45,20 +45,21 @@ run_sicktree_model_multitile <- function(
   #see http://stackoverflow.com/questions/7019912/using-the-rjava-package-on-win7-64-bit-with-r
   #http://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf
   #+++++++++++++++++++++++++++++++++++++++++++++++
-  if (R.Version()$arch != "i386"){
-    #If  64bit version, deactivate JAVA_HOME it within your R-session with the following code before loading rJava
-    if (Sys.getenv("JAVA_HOME")!="")
-      Sys.setenv(JAVA_HOME="")
-    library(rJava)
-  }
+  # if (R.Version()$arch != "i386"){
+  #   #If  64bit version, deactivate JAVA_HOME it within your R-session with the following code before loading rJava
+  #   if (Sys.getenv("JAVA_HOME")!="")
+  #     Sys.setenv(JAVA_HOME="")
+  #   library(rJava)
+  # }
 
   #load the model
   mod2 <- readRDS(fname_MaxEntmodel_r)
 
   #load the predictor layers
   raster_fnames <- unlist(read.table(file.path(txt_dir, fname_predictors_txt), stringsAsFactors=F)[,1])
-  file.path(predictors_dir, raster_fnames)
+  raster_fnames[1] = predictors_dir
   r_pred <- raster::stack(raster_fnames)
+
 
   #adjust the layernames to make them conform the model syntax
   names(r_pred) <- paste0('l',substr(names(r_pred),17,nchar(names(r_pred))))
@@ -71,7 +72,8 @@ run_sicktree_model_multitile <- function(
                                 paste0(unlist(strsplit(fname_predictors_txt,".txt")),unlist(strsplit(fname_MaxEntmodel_r,".rdsdata")), ".tif")
                                 )
   raster::writeRaster(px,filename = fname_output_tif, overwrite = T, dataType = 'INT1U' )
-
+  #empty the garbage collector
+  gc()
   return()
 }
 
